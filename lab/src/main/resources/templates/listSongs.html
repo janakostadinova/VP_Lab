@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Songs Homepage - Welcome to My Music Store</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to My Music Store</h1>
+</header>
+<main>
+    <br/>
+    <a href="/songs/add">Add song</a>
+    <h2>Choose a song:</h2>
+    <!-- Display radio buttons for each song,
+            the value should be the trackId
+            and the displayed text should be Title: <songTitle>, Genre:<genre>, Release Year: <releaseYear> -->
+    <form method="post" action="/artist">
+        <div th:each="song : ${songs}">
+            <input type="radio" name="trackId" th:value="${song.trackId}" th:text="|Title: ${song.title}, Genre: ${song.genre}, Release Year: ${song.releaseYear}, AlbumName: ${song.album.name}|"/>
+            <a th:href="@{/songs/edit/{Songid}(Songid=${song?.id})}">Edit</a>
+            <br/>
+            <a th:href="@{/songs/delete/{Songid}(Songid=${song?.id})}">Delete</a>
+        </div>
+        <input type='submit' value='Submit'>
+    </form>
+
+    <div>
+        <form method="get" action="/songs">
+            <select name="albumId">
+                <option th:each="album : ${albums}" th:value="${album.id}" th:text="${album.name}">
+                </option>
+            </select>
+            <br/>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+</main>
+</body>
+</html>
