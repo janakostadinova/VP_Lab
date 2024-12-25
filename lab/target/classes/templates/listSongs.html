@@ -1,4 +1,4 @@
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <title>Songs Homepage - Welcome to My Music Store</title>
@@ -15,7 +15,7 @@
 </header>
 <main>
     <br/>
-    <a href="/songs/add">Add song</a>
+    <a href="/songs/add" sec:authorize="isAuthenticated()">Add song</a>
     <h2>Choose a song:</h2>
     <!-- Display radio buttons for each song,
             the value should be the trackId
@@ -23,9 +23,9 @@
     <form method="post" action="/artist">
         <div th:each="song : ${songs}">
             <input type="radio" name="trackId" th:value="${song.trackId}" th:text="|Title: ${song.title}, Genre: ${song.genre}, Release Year: ${song.releaseYear}, AlbumName: ${song.album.name}|"/>
-            <a th:href="@{/songs/edit/{Songid}(Songid=${song?.id})}">Edit</a>
+            <a th:href="@{/songs/edit/{Songid}(Songid=${song?.id})}" sec:authorize="isAuthenticated()">Edit</a>
             <br/>
-            <a th:href="@{/songs/delete/{Songid}(Songid=${song?.id})}">Delete</a>
+            <a th:href="@{/songs/delete/{Songid}(Songid=${song?.id})}" sec:authorize="isAuthenticated()">Delete</a>
         </div>
         <input type='submit' value='Submit'>
     </form>
